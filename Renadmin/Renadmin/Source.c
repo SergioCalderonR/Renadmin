@@ -63,7 +63,7 @@ int wmain(int argc, WCHAR *argv[])
 			}
 			else
 			{
-				wprintf(L"\nBuilt-in admin account name has been change to Administrator\n");
+				wprintf(L"\nBuilt-in admin account name has been change to %s\n", argv[1]);
 			}
 
 		}		
