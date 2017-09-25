@@ -29,8 +29,9 @@ int wmain(int argc, WCHAR *argv[])
 {
 	//NetUserSetInfo
 	NET_API_STATUS netUserSet;
+	LPWSTR userName = L"Administrador";
 	DWORD level = 0;	//USER_INFO_0 structure
-	USER_INFO_0 usrInfo0 = {L"Administrator"};
+	USER_INFO_0 usrInfo0;
 	DWORD parm_err;
 
 	//GetUserDefaultLocaleName
@@ -39,9 +40,11 @@ int wmain(int argc, WCHAR *argv[])
 
 	if (argc == 1)
 	{
-		fwprintf(stderr, L"Usage: %s NewAdminName", argv[0]);
+		fwprintf(stderr, L"\nUsage: %s NewAdminName\n", argv[0]);
 		exit(1);
 	}
+
+	usrInfo0.usri0_name = argv[1];
 
 	if (GetUserDefaultLocaleName(pLocaleName, sizeOfLocale) != 0)
 	{
@@ -52,7 +55,7 @@ int wmain(int argc, WCHAR *argv[])
 		{
 			wprintf(L"\nCurrent Language ID= %s", pLocaleName);
 
-			netUserSet = NetUserSetInfo(NULL, argv[1], level, (LPBYTE)&usrInfo0, &parm_err);
+			netUserSet = NetUserSetInfo(NULL, userName, level, (LPBYTE)&usrInfo0, &parm_err);
 
 			if (netUserSet != NERR_Success)
 			{
